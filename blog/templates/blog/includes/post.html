@@ -1,14 +1,15 @@
 {% load static %}
 
-
 <li>
     <article class="post">
         <a href="">
-            <img src="{% static 'blog/images/radek.png' %}" alt="Mountain hiking">
-            <div class ="post__content">
-                <h3>Mountain hiking</h3>
-                <p>There is nothing like views</p>
+            <img src="{% static "blog/images/"|add:post.img %}" alt="Title" />
+            <div class = "post__content">
+                <h3>{{post.title}}</h3>  
+                <p>{{post.excert}}</p>
             </div>
         </a>
     </article>
 </li>
+
+<!--While accessing dictionary elem, instead of regular post["title"] notation, post.title use -->
