@@ -37,9 +37,8 @@ def starting_page(request):
     return render(request, "blog/index.html", {"posts": latest_posts})
 
 def posts(request):
-    sorted_posts = sorted(all_posts, key = get_date)
-    latest_posts = sorted_posts[-3:]
-    return render(request, "blog/all-posts.html",{"posts": latest_posts})
+    return render(request, "blog/all-posts.html",{"all_posts": all_posts})
 
 def post_detail(request, slug):  #if you have dynamic url in urlpatters with slug, this function needs to receive another argument
-    return render(request, "blog/post-detail.html")
+    identified_post = next(post for post in all_posts if post['slug'] == slug)
+    return render(request, "blog/post-detail.html", {"posts": identified_post})

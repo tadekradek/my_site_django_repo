@@ -13,30 +13,19 @@ This Post Title
 
 {% block content %}
 <section id="summary">
-    <h2>Post Title</h2>
+    <h2>{{posts.title}}</h2>
     <article>
-        <img src="{% static 'blog/radek.png' %}" alt="Post Title">
-        <address>By Radek</address>
+        <img src="{% static "blog/images/"|add:posts.img %}" alt="Post Title">
+        <address>By {{posts.author|title}}</address>
         <div>
-            Last updated on <time> Nov, 5th </time>
+            Last updated on <time> {{posts.date|date:"d M Y"}} </time>
         </div>
     </article>
 
 </section>
 
 <main>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus minima nam maiores incidunt laborum. Praesentium tempore in voluptas doloremque, accusamus non molestias ducimus delectus. Accusantium consequatur fugiat nulla aut eaque!
-    </p>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus minima nam maiores incidunt laborum. Praesentium tempore in voluptas doloremque, accusamus non molestias ducimus delectus. Accusantium consequatur fugiat nulla aut eaque!
-    </p>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus minima nam maiores incidunt laborum. Praesentium tempore in voluptas doloremque, accusamus non molestias ducimus delectus. Accusantium consequatur fugiat nulla aut eaque!
-    </p>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus minima nam maiores incidunt laborum. Praesentium tempore in voluptas doloremque, accusamus non molestias ducimus delectus. Accusantium consequatur fugiat nulla aut eaque!
-    </p>
+{{posts.content|linebreaks}}
 </main>
 
 
