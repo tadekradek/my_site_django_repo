@@ -2,29 +2,10 @@ from datetime import date
 
 from django.shortcuts import render
 
-all_posts = [
-    {"slug":"ligunia",
-     "img":"liga.png",
-     "author":"radek",
-     "date": date(2022,11,5),
-     "title":"Liga Legend",
-     "excert":"Welcome to the league of Draven",
-     "content":"Lorem ipsum dolor sit amet consectetur adipisicing elit"},
-    {"slug":"spotify",
-     "img":"spotify.png",
-     "author":"radek",
-     "date": date(2022,11,6),
-     "title":"Spotify",
-     "excert":"Spotify Logo",
-     "content":"Lorem ipsum dolor sit amet consectetur adipisicing elit"},
-    {"slug":"github",
-     "img":"github.png",
-     "author":"radek",
-     "date": date(2022,11,7),
-     "title":"Github Desktop",
-     "excert":"Github Desktop Icon",
-     "content":"Lorem ipsum dolor sit amet consectetur adipisicing elit."}
-]
+from .models import Post
+
+all_posts = Post.objects.all()
+
 
 def get_date(post):
     return post['date']
@@ -32,13 +13,15 @@ def get_date(post):
 # Create your views here.
 
 def starting_page(request):
-    sorted_posts = sorted(all_posts, key = get_date)
-    latest_posts = sorted_posts[-3:]
+    latest_posts = Post.objects.all().order_by("-date")[:3]
     return render(request, "blog/index.html", {"posts": latest_posts})
 
 def posts(request):
     return render(request, "blog/all-posts.html",{"all_posts": all_posts})
 
 def post_detail(request, slug):  #if you have dynamic url in urlpatters with slug, this function needs to receive another argument
-    identified_post = next(post for post in all_posts if post['slug'] == slug)
-    return render(request, "blog/post-detail.html", {"posts": identified_post})
+    identified_post = next(post for post in all_posts if post.slug == slug)
+    return render(request, "blog/post-detail.html", {
+        "post": identified_post,
+        "post_tags" : identified_post.tag.all()
+    })
